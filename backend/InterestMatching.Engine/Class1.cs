@@ -4,5 +4,6 @@ namespace InterestMatching.Engine
 {
     public class Class1
     {
+
     }
 }
