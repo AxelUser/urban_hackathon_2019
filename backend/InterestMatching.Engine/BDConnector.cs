@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 
 namespace InterestMatching.Engine
 {
@@ -13,19 +15,19 @@ namespace InterestMatching.Engine
             connection.Open();
         }
 
-        public string Get(string command)
+        public List<T> Get<T>(string command)
         {
             var myCommand = new MySqlCommand(command, connection);
             var reader = myCommand.ExecuteReader();
-            var sbuilder = new StringBuilder();
+            var result = new List<T>();
             while (reader.Read())
             {
-                var r = reader.GetInt32(0);
-                var id = reader.GetInt32(1); 
+                
+                var dbValue = reader.GetString(1); 
+                result.Add(JsonConvert.DeserializeObject<T>(dbValue));
 
-                sbuilder.Append($"{r} / {id}\n");
             }
-            return sbuilder.ToString();
+            return result;
         }
 
         public void Dispose()

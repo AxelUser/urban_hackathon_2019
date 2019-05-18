@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using InterestMatching.Engine;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InterestMatching.Api.Controllers
 {
@@ -9,9 +11,11 @@ namespace InterestMatching.Api.Controllers
         [HttpGet]
         public string WeatherForecasts()
         {
-            var connector = new Engine.BDConnector();
+            UInfo first;
+            using(var connector = new BDConnector())
+                first = connector.Get<UInfo>("select * from User").First();
 
-            return connector.Get("select * from TestTable");
+            return $"{first.Name} + {first.Age}";
         }
     }
 }
