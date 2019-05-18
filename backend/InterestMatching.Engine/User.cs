@@ -30,6 +30,9 @@ namespace InterestMatching.Engine
         [JsonProperty("UserStats")]
         public UserStats UserStats { get; set; }
 
+        [JsonProperty("DaysOfTheWeek")]
+        public DateTime[] DaysOfTheWeek { get; set; }
+
         public double CalculateInterestsDistanse(int[] matchingInterests)
         {
             var result = 0.0;
