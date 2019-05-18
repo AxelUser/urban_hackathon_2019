@@ -11,9 +11,9 @@ namespace InterestMatching.Api.Controllers
         [HttpGet]
         public string WeatherForecasts()
         {
-            UInfo first;
+            User first;
             using(var connector = new BDConnector())
-                first = connector.Get<UInfo>("User").First();
+                first = connector.Get<User>("UserIfo").First();
 
             return $"{first.Name} + {first.Age}";
         }
