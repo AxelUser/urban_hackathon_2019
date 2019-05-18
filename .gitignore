@@ -1,0 +1,11 @@
+*.suo
+*/bin/Debug
+*/bin/debug
+*/bin/Release
+*/bin/release
+*/obj/Debug
+*/obj/debug
+*/obj/Release
+*/obj/release
+*.resharper
+*/publish
