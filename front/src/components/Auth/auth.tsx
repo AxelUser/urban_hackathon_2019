@@ -10,6 +10,7 @@ import styles from './auth.module.css';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+import {Link} from 'react-router-dom';
 
 const Auth: React.FC = () => {
   const [showPassword, setShowingPassword] = useState(false);
@@ -49,9 +50,11 @@ const Auth: React.FC = () => {
             }
           />
         </FormControl>
-        <Button variant="contained" color="primary">
-            Continue
-        </Button>
+        <Link to="/profile">
+          <Button variant="contained" color="primary">
+              Continue
+          </Button>
+        </Link>
       </form>
     </Paper>
 
