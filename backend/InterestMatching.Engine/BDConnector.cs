@@ -15,7 +15,31 @@ namespace InterestMatching.Engine
             connection.Open();
         }
 
-        public List<T> Get<T>(string command)
+        public List<T> Get<T>(string tableName)
+        {
+            return Get($"select * from {tableName}", x =>
+            {
+                var dbValue = x.GetString(tableName);
+                return JsonConvert.DeserializeObject<T>(dbValue);
+            });
+        }
+
+        public List<string> GetString(string tableName)
+        {
+            return Get($"select * from {tableName}", x => x.GetString(tableName));
+        }
+
+        public List<DateTime> GetDataTime(string tableName)
+        {
+            return Get($"select * from {tableName}", x => x.GetDateTime(tableName));
+        }
+
+        public List<int> GetInt(string tableName)
+        {
+            return Get($"select * from {tableName}", x => x.GetInt32(tableName));
+        }
+
+        private List<T> Get<T>(string command, Func<MySqlDataReader, T> get)
         {
             var myCommand = new MySqlCommand(command, connection);
             var reader = myCommand.ExecuteReader();
@@ -23,12 +47,13 @@ namespace InterestMatching.Engine
             while (reader.Read())
             {
                 
-                var dbValue = reader.GetString(1); 
-                result.Add(JsonConvert.DeserializeObject<T>(dbValue));
+                var dbValue = get(reader); 
+                result.Add(dbValue);
 
             }
             return result;
         }
+
 
         public void Dispose()
         {

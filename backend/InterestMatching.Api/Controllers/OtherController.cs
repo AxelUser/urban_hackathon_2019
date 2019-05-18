@@ -13,7 +13,7 @@ namespace InterestMatching.Api.Controllers
         {
             UInfo first;
             using(var connector = new BDConnector())
-                first = connector.Get<UInfo>("select * from User").First();
+                first = connector.Get<UInfo>("User").First();
 
             return $"{first.Name} + {first.Age}";
         }
