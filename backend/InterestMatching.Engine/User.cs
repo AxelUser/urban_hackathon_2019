@@ -3,23 +3,31 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Dynamic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace InterestMatching.Engine
 {
     public class User
     {
+        [JsonProperty("Email")]
         public string Email { get; set; }
 
+        [JsonProperty("Age")]
         public int Age { get; set; }
 
+        [JsonProperty("Interests")]
         public int[] Interests { get; set; }
 
+        [JsonProperty("Description")]
         public string Description { get; set; }
 
+        [JsonProperty("Name")]
         public string Name { get; set; }
 
+        [JsonProperty("SurName")]
         public string SurName { get; set; }
 
+        [JsonProperty("UserStats")]
         public UserStats UserStats { get; set; }
 
         public double CalculateInterestsDistanse(int[] matchingInterests)
