@@ -13,9 +13,10 @@ namespace InterestMatching.Api.Controllers
     public class UserController : ControllerBase
     {
         [HttpGet("{id}", Name = "GetPair")]
-        public string GetPair(string userMail)
+        public User GetPair(string userMail)
         {
-            return "value";
+            var user = UserTable.Get(userMail);
+            return user;
         }
 
         [HttpPost]
