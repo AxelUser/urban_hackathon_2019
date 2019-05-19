@@ -26,6 +26,13 @@ namespace InterestMatching.Api.Controllers
         }
 
         [HttpPost]
+        public Meeting GetPair([FromBody] User user)
+        {
+            var userMail = NewUser(user);
+            return GetPair(userMail);
+        }
+
+        [HttpPost]
         public string NewUser([FromBody] User user)
         {
             UserTable.Add(user);
