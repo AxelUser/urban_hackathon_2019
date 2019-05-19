@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InterestMatching.Engine
 {
@@ -23,7 +22,8 @@ namespace InterestMatching.Engine
 
         public static ValueTuple<string, string> GetPair(User user, User[] matchingUsers)
         {
-            var minimumDistance = new ValueTuple<string, double>(matchingUsers[0].Email, user.CalculateInterestsDistanse(matchingUsers[0].Interests));
+            var minimumDistance = new ValueTuple<string, double>(matchingUsers[0].Email,
+                user.CalculateInterestsDistanse(matchingUsers[0].Interests));
             for (var i = 1; i < matchingUsers.Length; i++)
             {
                 var interestsDistanse = user.CalculateInterestsDistanse(matchingUsers[i].Interests);
@@ -37,7 +37,8 @@ namespace InterestMatching.Engine
             return (user.Email, minimumDistance.Item1);
         }
 
-        private static void DeleteFoundedPair(double[,] matchingMap, string[] userIndexMap, ValueTuple<int, int> pairIndexes)
+        private static void DeleteFoundedPair(double[,] matchingMap, string[] userIndexMap,
+            ValueTuple<int, int> pairIndexes)
         {
             var linesCount = matchingMap.GetLength(0);
             var columnCount = matchingMap.GetLength(1);
@@ -59,47 +60,40 @@ namespace InterestMatching.Engine
             RecalculateMinimum(newMatchingMap);
         }
 
-        private static void CopyMatchingMap(double[,] matchingMap, double[,] newMatchingMap, int startIndex, int indexOffset, int lineLimit, int columnLimit)
+        private static void CopyMatchingMap(double[,] matchingMap, double[,] newMatchingMap, int startIndex,
+            int indexOffset, int lineLimit, int columnLimit)
         {
             for (var i = startIndex; i < lineLimit; i++)
-            {
-                for (var j = startIndex; j < columnLimit; j++)
-                {
-                    newMatchingMap[i - indexOffset, j - indexOffset] = matchingMap[i, j];
-                }
-            }
+            for (var j = startIndex; j < columnLimit; j++)
+                newMatchingMap[i - indexOffset, j - indexOffset] = matchingMap[i, j];
         }
 
-        private static void CopyUserIndexMap(string[] userIndexMap, string[] newUserIndexMap, int startIndex, int indexOffset, int limit)
+        private static void CopyUserIndexMap(string[] userIndexMap, string[] newUserIndexMap, int startIndex,
+            int indexOffset, int limit)
         {
-            for (var i = startIndex; i < limit; i++)
-            {
-                newUserIndexMap[i - indexOffset] = userIndexMap[i];
-            }
+            for (var i = startIndex; i < limit; i++) newUserIndexMap[i - indexOffset] = userIndexMap[i];
         }
 
         private static ValueTuple<int, int> GetPair(double[,] matchingMap)
         {
             var columnCount = matchingMap.GetLength(1);
             const int currentIndex = 0;
-            var minimumIndex = (int)matchingMap[currentIndex, columnCount - 1];
+            var minimumIndex = (int) matchingMap[currentIndex, columnCount - 1];
             return FindPair(matchingMap, currentIndex, minimumIndex, columnCount);
         }
 
-        private static ValueTuple<int, int> FindPair(double[,] matchingMap, int currentIndex, int minimumIndex, int columnCount)
+        private static ValueTuple<int, int> FindPair(double[,] matchingMap, int currentIndex, int minimumIndex,
+            int columnCount)
         {
             if ((int) matchingMap[minimumIndex, columnCount - 1] == currentIndex)
             {
-                if (currentIndex > minimumIndex)
-                {
-                    return (minimumIndex, currentIndex);
-                }
+                if (currentIndex > minimumIndex) return (minimumIndex, currentIndex);
 
                 return (currentIndex, minimumIndex);
             }
 
             currentIndex = minimumIndex;
-            minimumIndex = (int)matchingMap[currentIndex, columnCount - 1];
+            minimumIndex = (int) matchingMap[currentIndex, columnCount - 1];
 
             return FindPair(matchingMap, currentIndex, minimumIndex, columnCount);
         }
@@ -111,10 +105,7 @@ namespace InterestMatching.Engine
             {
                 var min = new ValueTuple<double, int>(double.MaxValue, 0);
                 matchingMap[i, i] = double.MaxValue;
-                for (var j = 0; j < i; j++)
-                {
-                    min = GetMinimum(matchingMap[i, j], j, min);
-                }
+                for (var j = 0; j < i; j++) min = GetMinimum(matchingMap[i, j], j, min);
 
                 for (var j = i; j < matchingUsers.Count; j++)
                 {
@@ -140,10 +131,7 @@ namespace InterestMatching.Engine
             for (var i = 0; i < linesCount; i++)
             {
                 var min = new ValueTuple<double, int>(double.MaxValue, 0);
-                for (var j = 0; j < columnCount; j++)
-                {
-                    min = GetMinimum(matchingMap[i, j], j, min);
-                }
+                for (var j = 0; j < columnCount; j++) min = GetMinimum(matchingMap[i, j], j, min);
 
                 matchingMap[i, columnCount - 1] = min.Item2;
             }
