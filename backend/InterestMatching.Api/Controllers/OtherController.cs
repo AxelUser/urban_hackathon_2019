@@ -27,7 +27,7 @@ namespace InterestMatching.Api.Controllers
             };
 
 
-            UserTable.Add("test@mail.test", first);
+            UserTable.Add(first);
 
             return "OK";
         }
