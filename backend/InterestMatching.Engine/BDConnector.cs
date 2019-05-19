@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
@@ -10,11 +9,18 @@ namespace InterestMatching.Engine
 {
     public class BDConnector : IDisposable
     {
+        private readonly MySqlConnection connection;
+
         public BDConnector()
         {
             var Connect = "Database=temp_db;Data Source=209.250.236.34;User Id=temp_user;Password=1234";
             connection = new MySqlConnection(Connect);
             connection.Open();
+        }
+
+        public void Dispose()
+        {
+            connection.Close();
         }
 
         public List<T> GetListFromJsons<T>(string tableName, string columnName, string condition = "")
@@ -41,7 +47,8 @@ namespace InterestMatching.Engine
             return GetAll($"select * from {tableName} {GetCondition(condition)}", x => x.GetInt32(columnName));
         }
 
-        public T FindFromJsonByObjectProperty<T>(string tableName, string columnName, Func<List<T>, T> select, string condition = "")
+        public T FindFromJsonByObjectProperty<T>(string tableName, string columnName, Func<List<T>, T> select,
+            string condition = "")
         {
             return select(GetListFromJsons<T>(tableName, columnName, condition));
         }
@@ -80,9 +87,10 @@ namespace InterestMatching.Engine
                 var result = new List<T>();
                 while (reader.Read())
                 {
-                    var dbValue = get(reader); 
+                    var dbValue = get(reader);
                     result.Add(dbValue);
                 }
+
                 return result;
             }
             catch (Exception e)
@@ -136,12 +144,5 @@ namespace InterestMatching.Engine
                 throw;
             }
         }
-
-        public void Dispose()
-        {
-            connection.Close();
-        }
-
-        private MySqlConnection connection;
     }
 }

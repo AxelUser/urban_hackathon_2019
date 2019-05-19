@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using InterestMatching.Engine;
+﻿using InterestMatching.Engine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterestMatching.Api.Controllers
@@ -12,8 +10,7 @@ namespace InterestMatching.Api.Controllers
         [HttpGet]
         public string SetUser()
         {
-            
-            var first = new User()
+            var first = new User
             {
                 Age = 12,
                 Description = "Test User",
@@ -21,14 +18,14 @@ namespace InterestMatching.Api.Controllers
                 Interests = new[] {1, 2, 3, 4},
                 Name = "John",
                 SurName = "Dow",
-                UserStats = new UserStats()
+                UserStats = new UserStats
                 {
                     GoodMood = 2,
                     NonPunctuality = 3,
                     SelfCentered = 9
                 }
             };
-            
+
 
             UserTable.Add("test@mail.test", first);
 
