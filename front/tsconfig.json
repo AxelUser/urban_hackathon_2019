@@ -20,6 +20,6 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "src", "../backend/InterestMatching.Api/Controllers/UserController.cs"
   ]
 }

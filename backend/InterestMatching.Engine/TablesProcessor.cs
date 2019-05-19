@@ -28,12 +28,12 @@ namespace InterestMatching.Engine
             }
         }
 
-        public static void Add(string mail, params User[] users)
+        public static void Add(params User[] users)
         {
             using (var connector = new BDConnector())
             {
                 foreach (var user in users)
-                    connector.Add("UserIfo", Tuple.Create("ID", mail),
+                    connector.Add("UserIfo", Tuple.Create("ID", user.Email),
                         Tuple.Create("UserInfo", JsonConvert.SerializeObject(user)));
             }
         }
