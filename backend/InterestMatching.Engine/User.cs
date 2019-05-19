@@ -16,7 +16,7 @@ namespace InterestMatching.Engine
         public int Age { get; set; }
 
         [JsonProperty("Interests")]
-        public int[] Interests { get; set; }
+        public bool[] Interests { get; set; }
 
         [JsonProperty("Description")]
         public string Description { get; set; }
@@ -38,7 +38,7 @@ namespace InterestMatching.Engine
             var result = 0.0;
             for (var i = 0; i < this.Interests.Length; i++)
             {
-                result += Math.Pow(Math.Abs(this.Interests[i] - matchingInterests[i]), 2);
+                result += Math.Abs(Convert.ToInt32(this.Interests[i]) - Convert.ToInt32(matchingInterests[i]));
             }
 
             return Math.Sqrt(result);
