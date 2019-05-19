@@ -15,7 +15,7 @@ namespace InterestMatching.Api.Controllers
                 Age = 12,
                 Description = "Test User",
                 Email = "test@mail.test",
-                Interests = new[] {1, 2, 3, 4},
+                Interests = new[] {true, true, false, true},
                 Name = "John",
                 SurName = "Dow",
                 UserStats = new UserStats
