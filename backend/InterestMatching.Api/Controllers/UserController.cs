@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using InterestMatching.Engine;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterestMatching.Api.Controllers
@@ -13,10 +10,19 @@ namespace InterestMatching.Api.Controllers
     public class UserController : ControllerBase
     {
         [HttpGet("{id}", Name = "GetPair")]
-        public User GetPair(string userMail)
+        public Meeting GetPair(string userMail)
         {
             var user = UserTable.Get(userMail);
-            return user;
+            var all = UserTable.GetAll()
+                .Where(u => !u.Email.Equals(user.Email, StringComparison.CurrentCultureIgnoreCase)).ToArray();
+            var result = MatchingEngine.GetPair(user, all);
+
+            return new Meeting
+            {
+                Date = DateTime.Today,
+                FirstUserId = userMail,
+                SecondUserId = result.Item2
+            };
         }
 
         [HttpPost]
