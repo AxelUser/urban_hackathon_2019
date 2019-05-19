@@ -25,7 +25,9 @@ namespace InterestMatching.Engine
         {
             var result = 0.0;
             for (var i = 0; i < Interests.Length; i++)
+            {
                 result += Math.Abs(Convert.ToInt32(Interests[i]) - Convert.ToInt32(matchingInterests[i]));
+            }
 
             return Math.Sqrt(result);
         }
