@@ -33,7 +33,7 @@ namespace InterestMatching.Engine
         [JsonProperty("DaysOfTheWeek")]
         public int[] DaysOfTheWeek { get; set; }
 
-        public double CalculateInterestsDistanse(int[] matchingInterests)
+        public double CalculateInterestsDistanse(bool[] matchingInterests)
         {
             var result = 0.0;
             for (var i = 0; i < this.Interests.Length; i++)
