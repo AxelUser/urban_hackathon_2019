@@ -86,14 +86,16 @@ namespace InterestMatching.Engine
             try
             {
                 var myCommand = new MySqlCommand(command, connection);
-                var reader = myCommand.ExecuteReader();
-                var result = new List<T>();
-                while (reader.Read())
+                using (var reader = myCommand.ExecuteReader())
                 {
-                    var dbValue = get(reader); 
-                    result.Add(dbValue);
+                    var result = new List<T>();
+                    while (reader.Read())
+                    {
+                        var dbValue = get(reader);
+                        result.Add(dbValue);
+                    }
+                    return result;
                 }
-                return result;
             }
             catch (Exception e)
             {

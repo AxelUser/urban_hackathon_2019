@@ -1,4 +1,5 @@
-﻿using InterestMatching.Engine;
+﻿using System;
+using InterestMatching.Engine;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InterestMatching.Api.Controllers
@@ -44,6 +45,43 @@ namespace InterestMatching.Api.Controllers
             if (first == null) return "User does not exist";
 
             return $"{first.Name} + {first.UserStats.GoodMood} + {first.UserStats.Sociability} + {first.Age}";
+        }
+    }
+
+    [Route("api/GetMeeting")]
+    [ApiController]
+    public class GetMeetingController : Controller
+    {
+        [HttpGet]
+        public string GetUser()
+        {
+            var meeting = MeetingsTable.GetById(12);
+            if (meeting == null) return "Meeting does not exist";
+
+            return $"{meeting.FirstUserId} + {meeting.SecondUserId} + {meeting.Id}";
+        }
+    }
+
+    [Route("api/SetMeeting")]
+    [ApiController]
+    public class SetMeetingController : Controller
+    {
+        [HttpGet]
+        public string GetUser()
+        {
+            var meeting = new Meeting()
+            {
+                Id = 12,
+                FirstUserId = "Test1@test.user",
+                SecondUserId = "Test2@test.user",
+                Date = DateTime.Now,
+                FirstUserSetRate = true,
+                SecondUserSetRate = false
+            };
+            
+            MeetingsTable.Add(meeting);
+
+            return "OK";
         }
     }
 }
