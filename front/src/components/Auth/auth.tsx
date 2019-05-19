@@ -41,7 +41,7 @@ const Auth: React.FC = () => {
                   <IconButton
                       aria-label="Toggle password visibility"
                       onClick={() => setShowingPassword(!showPassword)}>
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                      {showPassword ? <Visibility/> : <VisibilityOff/>}
                   </IconButton>
               </InputAdornment>
             }/>

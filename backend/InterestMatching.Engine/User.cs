@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace InterestMatching.Engine
@@ -10,8 +9,7 @@ namespace InterestMatching.Engine
 
         [JsonProperty("Age")] public int Age { get; set; }
 
-        [JsonProperty("Interests")]
-        public bool[] Interests { get; set; }
+        [JsonProperty("Interests")] public bool[] Interests { get; set; }
 
         [JsonProperty("Description")] public string Description { get; set; }
 
@@ -26,10 +24,8 @@ namespace InterestMatching.Engine
         public double CalculateInterestsDistanse(int[] matchingInterests)
         {
             var result = 0.0;
-            for (var i = 0; i < this.Interests.Length; i++)
-            {
-                result += Math.Abs(Convert.ToInt32(this.Interests[i]) - Convert.ToInt32(matchingInterests[i]));
-            }
+            for (var i = 0; i < Interests.Length; i++)
+                result += Math.Abs(Convert.ToInt32(Interests[i]) - Convert.ToInt32(matchingInterests[i]));
 
             return Math.Sqrt(result);
         }
