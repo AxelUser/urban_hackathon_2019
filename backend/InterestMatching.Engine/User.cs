@@ -31,7 +31,7 @@ namespace InterestMatching.Engine
         public UserStats UserStats { get; set; }
 
         [JsonProperty("DaysOfTheWeek")]
-        public DateTime[] DaysOfTheWeek { get; set; }
+        public int[] DaysOfTheWeek { get; set; }
 
         public double CalculateInterestsDistanse(int[] matchingInterests)
         {

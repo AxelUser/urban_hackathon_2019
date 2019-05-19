@@ -12,6 +12,7 @@ namespace InterestMatching.Api.Controllers
         [HttpGet]
         public string SetUser()
         {
+            
             var first = new User()
             {
                 Age = 12,
