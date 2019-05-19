@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -39,7 +40,7 @@ namespace InterestMatching.Engine
         }
     }
 
-    public static class Meetings
+    public static class MeetingsTable
     {
         public static List<Meeting> GetAll()
         {
@@ -66,10 +67,10 @@ namespace InterestMatching.Engine
                 var meeting = new Meeting()
                 {
                     FirstUserId = connector.GetFirstString("Meetings", "ID", condition),
-                    SecondUserId = connector.GetFirstString("Meetings", "ID", condition),
-                    Date = connector.GetFirstDataTime("Meetings", "ID", condition),
-                    FirstUserSetRate = connector.GetFirstOrDefaultBool("Meetings", "ID", condition),
-                    SecondUserSetRate = connector.GetFirstOrDefaultBool("Meetings", "ID", condition)
+                    SecondUserId = connector.GetFirstString("Meetings", "FirstUserId", condition),
+                    Date = connector.GetFirstDataTime("Meetings", "Date", condition),
+                    FirstUserSetRate = connector.GetFirstOrDefaultBool("Meetings", "FirstUserSetRate", condition),
+                    SecondUserSetRate = connector.GetFirstOrDefaultBool("Meetings", "SecondUserSetRate", condition)
                 };
 
                 return Contatins(meeting) ? meeting : null;
@@ -87,6 +88,19 @@ namespace InterestMatching.Engine
         {
             return meeting.FirstUserId != null
                        && meeting.SecondUserId != null;
+        }
+
+        public static void Add(params Meeting[] meetings)
+        {
+            using (var connector = new BDConnector())
+                foreach (var meeting in meetings)
+                    connector.Add("Meetings", 
+                        Tuple.Create("ID", meeting.Id.ToString()), 
+                        Tuple.Create("FirstUserId", meeting.FirstUserId),
+                        Tuple.Create("SecondUserId", meeting.SecondUserId),
+                        Tuple.Create("Date", meeting.Date.ToString("yyyy-MM-dd HH:mm:ss")),
+                        Tuple.Create("FirstUserSetRate", meeting.FirstUserSetRate ? "1" : "0"),
+                        Tuple.Create("SecondUserSetRate", meeting.SecondUserSetRate ? "1" : "0"));
         }
     }
 }
